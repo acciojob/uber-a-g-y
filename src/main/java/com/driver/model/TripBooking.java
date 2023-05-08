@@ -2,31 +2,37 @@ package com.driver.model;
 
 import javax.persistence.*;
 
-public class TripBooking {
-
+@Entity
+public class TripBooking{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tripBookingId;
-
     private String fromLocation;
     private String toLocation;
 
     private int distanceInKm;
-
-    @Enumerated(value = EnumType.STRING)
     private TripStatus status;
-
     private int bill;
+    @ManyToOne
+    @JoinColumn
+    Driver driver;
+
+    @ManyToOne
+    @JoinColumn
+    Customer customer;
 
     public TripBooking() {
     }
 
-    public TripBooking(String fromLocation, String toLocation, int distanceInKm, TripStatus status, int bill) {
+    public TripBooking(int tripBookingId, String fromLocation, String toLocation, int distanceInKm, TripStatus status, int bill, Driver driver, Customer customer) {
+        this.tripBookingId = tripBookingId;
         this.fromLocation = fromLocation;
         this.toLocation = toLocation;
         this.distanceInKm = distanceInKm;
         this.status = status;
         this.bill = bill;
+        this.driver = driver;
+        this.customer = customer;
     }
 
     public int getTripBookingId() {
@@ -92,13 +98,4 @@ public class TripBooking {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-
-    @ManyToOne
-    @JoinColumn
-    private Driver driver;
-
-
-    @ManyToOne
-    @JoinColumn
-    private Customer customer;
 }

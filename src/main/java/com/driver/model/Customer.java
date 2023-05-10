@@ -5,19 +5,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Customer{
+public class Customer {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerId;
+
     private String mobile;
+
     private String password;
+
+    //Customer-TripBooking
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     List<TripBooking> tripBookingList = new ArrayList<>();
+
     public Customer() {
     }
 
-
-    public Customer(String mobile, String password,List<TripBooking> tripBookingList ) {
+    public Customer(int customerId, String mobile, String password, List<TripBooking> tripBookingList) {
+        this.customerId = customerId;
         this.mobile = mobile;
         this.password = password;
         this.tripBookingList = tripBookingList;

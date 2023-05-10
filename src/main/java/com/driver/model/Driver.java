@@ -5,28 +5,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public
-class Driver{
+public class Driver {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int driverId;
+
     private String mobile;
+
     private String password;
+
+    //assuming driver is parent of cab
     @OneToOne(mappedBy = "driver",cascade = CascadeType.ALL)
     Cab cab;
 
+    // driver parent of TripBooking
     @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
     List<TripBooking> tripBookingList = new ArrayList<>();
 
     public Driver() {
     }
 
-    public Driver(int driverId, String mobile, String password, List<TripBooking> tripBookingList, Cab cab) {
+    public Driver(int driverId, String mobile, String password, Cab cab, List<TripBooking> tripBookingList) {
         this.driverId = driverId;
         this.mobile = mobile;
         this.password = password;
-        this.tripBookingList = tripBookingList;
         this.cab = cab;
+        this.tripBookingList = tripBookingList;
     }
 
     public int getDriverId() {
@@ -52,6 +57,7 @@ class Driver{
     public void setPassword(String password) {
         this.password = password;
     }
+
     public Cab getCab() {
         return cab;
     }
